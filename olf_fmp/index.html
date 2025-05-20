@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}FMP Dashboard{% endblock %} {% block
+headerbar %} {% include 'components/header.html' with active='deals' %} {%
+endblock headerbar %} {% block content %}
+
+<div class="p-0">
+  <div class="row">
+    <div class="col">
+      <h1>FMP Dashboard</h1>
+    </div>
+    <div class="col">
+      <div class="header-button-container">
+        <a
+          class="kds-button kds-button--outline kds-float-right"
+          href="{% url 'deal_admin.new_deal_setup' %}"
+          class="kds-float-right"
+          >New Deal Setup</a
+        >
+      </div>
+      <div class="kds-float-right">
+        {% include 'components/alert_bar.html' with message=message %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'modules/deal_collection/deal_collection_table.html' with
+tabledata=tabledata %} {% endblock %}
