@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet, useLocation } from "react-router";
+
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
@@ -10,7 +11,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = () => {
   const location = useLocation();
   const currentPath = location.pathname;
-  
+
   // Determine active state for navbar based on current path
   const getActiveNavItem = () => {
     if (currentPath.startsWith("/admin")) {
@@ -18,7 +19,7 @@ const Layout: React.FC<LayoutProps> = () => {
     }
     return "deals";
   };
-  
+
   return (
     <div className="app-container">
       <Navbar active={getActiveNavItem()} />

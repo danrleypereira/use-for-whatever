@@ -1,4 +1,5 @@
 import Admin from "~/pages/Admin";
+
 import type { Route } from "../+types/root";
 
 export function meta({}: Route.MetaArgs) {

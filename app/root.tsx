@@ -23,18 +23,22 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
   // Added from legacy app
-  { rel: "shortcut icon", href: "https://kcp.krollbondratings.com/favicon/favicon.ico" },
-  { rel: "stylesheet", href: "https://ep-kds-cdn.azureedge.net/cdn/kds.css" },
-  { 
-    rel: "stylesheet", 
-    href: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
-    integrity: "sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3",
-    crossOrigin: "anonymous"
+  {
+    rel: "shortcut icon",
+    href: "https://kcp.krollbondratings.com/favicon/favicon.ico",
   },
-  { 
-    rel: "stylesheet", 
-    href: "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css" 
-  }
+  { rel: "stylesheet", href: "https://ep-kds-cdn.azureedge.net/cdn/kds.css" },
+  {
+    rel: "stylesheet",
+    href: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
+    integrity:
+      "sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "stylesheet",
+    href: "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css",
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -43,11 +47,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
         <Meta />
         <Links />
         {/* Scripts from legacy app */}
-        <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+        <script
+          defer
+          src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"
+        ></script>
         <script
           src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
           integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

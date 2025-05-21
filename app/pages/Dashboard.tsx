@@ -4,7 +4,7 @@ import { Link } from "react-router";
 const Dashboard: React.FC = () => {
   // Mock data for alert message
   const message = "Welcome to the FMP Dashboard";
-  
+
   return (
     <div className="p-0">
       <div className="row">
@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Mock data for deal collection table */}
       <div className="table-responsive mt-4">
         <table className="table table-striped">
@@ -50,7 +50,9 @@ const Dashboard: React.FC = () => {
               <td>Active</td>
               <td>2025-05-01</td>
               <td>
-                <Link to="/deals/D001" className="btn btn-sm btn-primary">View</Link>
+                <Link to="/deals/D001" className="btn btn-sm btn-primary">
+                  View
+                </Link>
               </td>
             </tr>
             <tr>
@@ -59,7 +61,9 @@ const Dashboard: React.FC = () => {
               <td>Pending</td>
               <td>2025-05-10</td>
               <td>
-                <Link to="/deals/D002" className="btn btn-sm btn-primary">View</Link>
+                <Link to="/deals/D002" className="btn btn-sm btn-primary">
+                  View
+                </Link>
               </td>
             </tr>
             <tr>
@@ -68,7 +72,9 @@ const Dashboard: React.FC = () => {
               <td>Completed</td>
               <td>2025-04-25</td>
               <td>
-                <Link to="/deals/D003" className="btn btn-sm btn-primary">View</Link>
+                <Link to="/deals/D003" className="btn btn-sm btn-primary">
+                  View
+                </Link>
               </td>
             </tr>
           </tbody>

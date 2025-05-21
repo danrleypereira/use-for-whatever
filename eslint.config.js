@@ -1,74 +1,74 @@
-import eslint from 'eslint';
+import eslint from "eslint";
 
 /** @type {eslint.FlatESLintConfig} */
 const config = [
   {
-    ignores: ['dist', 'build', 'node_modules', '*.config.js', 'vite.config.ts'],
+    ignores: ["dist", "build", "node_modules", "*.config.js", "vite.config.ts"],
   },
   {
-    files: ['**/*.{js,jsx,ts,tsx}'],
+    files: ["**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      parser: '@typescript-eslint/parser',
+      ecmaVersion: "latest",
+      sourceType: "module",
+      parser: "@typescript-eslint/parser",
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
         },
-        project: './tsconfig.json',
+        project: "./tsconfig.json",
       },
     },
     plugins: {
-      react: require('eslint-plugin-react'),
-      'react-hooks': require('eslint-plugin-react-hooks'),
-      '@typescript-eslint': require('@typescript-eslint/eslint-plugin'),
-      import: require('eslint-plugin-import'),
-      prettier: require('eslint-plugin-prettier'),
+      react: require("eslint-plugin-react"),
+      "react-hooks": require("eslint-plugin-react-hooks"),
+      "@typescript-eslint": require("@typescript-eslint/eslint-plugin"),
+      import: require("eslint-plugin-import"),
+      prettier: require("eslint-plugin-prettier"),
     },
     rules: {
       // React rules
-      'react/prop-types': 'off',
-      'react/react-in-jsx-scope': 'off',
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
+      "react/prop-types": "off",
+      "react/react-in-jsx-scope": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
 
       // TypeScript rules
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
         {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
         },
       ],
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'warn',
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-non-null-assertion": "warn",
 
       // Import rules
-      'import/order': [
-        'error',
+      "import/order": [
+        "error",
         {
           groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index',
-            'object',
-            'type',
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+            "object",
+            "type",
           ],
-          'newlines-between': 'always',
+          "newlines-between": "always",
           alphabetize: {
-            order: 'asc',
+            order: "asc",
             caseInsensitive: true,
           },
         },
       ],
-      'import/no-duplicates': 'error',
+      "import/no-duplicates": "error",
 
       // General rules
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
-      'prettier/prettier': 'error',
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "prettier/prettier": "error",
     },
   },
 ];

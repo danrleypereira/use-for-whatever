@@ -1,12 +1,12 @@
-import type { Route } from "./+types/_layout";
 import { Outlet } from "react-router";
+
 import Navbar from "~/components/Navbar";
 import Sidebar from "~/components/Sidebar";
 
+import type { Route } from "./+types/_layout";
+
 export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "FMP Application" },
-  ];
+  return [{ title: "FMP Application" }];
 }
 
 export default function Layout() {

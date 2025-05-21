@@ -1,5 +1,5 @@
-import { Link, useLocation } from 'react-router';
-import React from 'react';
+import React from "react";
+import { Link, useLocation } from "react-router";
 
 interface NavbarProps {
   active?: string;
@@ -33,13 +33,13 @@ const Navbar: React.FC<NavbarProps> = ({ active }) => {
       <nav className="kds-header-nav">
         <ul className="kds-header-nav-list">
           <li
-            className={`kds-header-nav-list-item ${isActive('/') ? 'active' : ''}`}
+            className={`kds-header-nav-list-item ${isActive("/") ? "active" : ""}`}
           >
             <Link to="/">Deals</Link>
           </li>
 
           <li
-            className={`kds-header-nav-list-item ${isActive('admin') ? 'active' : ''}`}
+            className={`kds-header-nav-list-item ${isActive("admin") ? "active" : ""}`}
           >
             <div className="header-nav-dropdown">
               <Link to="/admin">

@@ -9,6 +9,7 @@ node_modules/
 # Generated files
 .pnpm-store/
 pnpm-lock.yaml
+.react-router/
 
 # Log files
 *.log
@@ -21,3 +22,24 @@ pnpm-lock.yaml
 .eslintcache
 .npm
 .cache/
+
+# Route type definitions
+**/+types/**
+**/*.d.ts
+
+# Config files
+*.config.js
+*.config.mjs
+*.config.ts
+vite.config.ts
+tailwind.config.js
+postcss.config.js
+
+# Build artifacts
+**/vendor/**
+**/generated/**
+
+# Editor and tool-specific directories
+.vscode/
+.idea/
+.claude/
