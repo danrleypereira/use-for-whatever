@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # Production application service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: forge-ui-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - forge-network
+
+  # Development service with hot reloading
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development-dependencies-env
+    container_name: forge-ui-dev
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./app:/app/app
+      - ./public:/app/public
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./react-router.config.ts:/app/react-router.config.ts
+      # Exclude node_modules from volume to use the container's node_modules
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: pnpm dev
+    networks:
+      - forge-network
+
+# Define networks
+networks:
+  forge-network:
+    driver: bridge

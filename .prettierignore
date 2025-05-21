@@ -1,0 +1,23 @@
+# Build directories
+dist/
+build/
+public/
+
+# Node modules
+node_modules/
+
+# Generated files
+.pnpm-store/
+pnpm-lock.yaml
+
+# Log files
+*.log
+
+# Environment variables
+.env*
+!.env.example
+
+# Cache
+.eslintcache
+.npm
+.cache/

@@ -1,22 +1,56 @@
-FROM node:20-alpine AS development-dependencies-env
-COPY . /app
-WORKDIR /app
-RUN npm ci
+# Multi-stage build for React Router application using pnpm
+FROM node:18-alpine AS development-dependencies-env
 
-FROM node:20-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
+# Install pnpm
+RUN npm install -g pnpm@latest
 
-FROM node:20-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
+# Set working directory
 WORKDIR /app
-RUN npm run build
 
-FROM node:20-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
+
+# Install all dependencies
+RUN pnpm install --frozen-lockfile
+
+# Copy application code
+COPY . .
+
+# Build stage
+FROM node:18-alpine AS build-env
+
+# Install pnpm
+RUN npm install -g pnpm@latest
+
+# Set working directory
+WORKDIR /app
+
+# Copy dependencies and source code from previous stage
+COPY --from=development-dependencies-env /app /app
+
+# Build the application
+RUN pnpm build
+
+# Production stage using node to serve the application
+FROM node:18-alpine AS production
+
+# Install pnpm
+RUN npm install -g pnpm@latest
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
+
+# Install only production dependencies
+RUN pnpm install --prod --frozen-lockfile
+
+# Copy build artifacts from build stage
 COPY --from=build-env /app/build /app/build
-WORKDIR /app
-CMD ["npm", "run", "start"]
+
+# Expose port
+EXPOSE 3000
+
+# Start the React Router server
+CMD ["pnpm", "start"]
