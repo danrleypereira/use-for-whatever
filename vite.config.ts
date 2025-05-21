@@ -25,23 +25,17 @@ export default defineConfig({
     // Use the default Vite port
     port: 5173,
     
-    // Customize HMR for working through a reverse proxy
-    hmr: {
-      // Specify the hostname clients should use to connect for HMR
-      host: 'forge-ui.kbra.vm',
-      
-      // Use the same port as the dev server
-      port: 5173,
-      
-      // Use WebSockets protocol
-      protocol: 'ws',
-      
-      // Uncomment to disable HMR if needed for troubleshooting
-      // overlay: false,
-    },
+    // Simplified HMR configuration that works with Nginx reverse proxy
+    hmr: true,
+    
+    // Specify base URL
+    base: '/',
     
     // CORS settings
     cors: true,
+    
+    // Allow the custom hostname
+    allowedHosts: ['forge-ui.kbra.vm', 'localhost'],
     
     // Customize headers for proper proxy support
     headers: {
