@@ -10,7 +10,7 @@ stages:
 
 # Default settings
 default:
-  image: node:18-alpine
+  image: node:22-alpine
 
 # Cache configuration
 cache:
@@ -24,7 +24,7 @@ cache:
 # Variables
 variables:
   PNPM_CACHE_FOLDER: .pnpm-store
-  HUSKY: 0  # Disable Husky hooks in CI
+  HUSKY: 0 # Disable Husky hooks in CI
 
 # Install and setup dependencies
 setup:

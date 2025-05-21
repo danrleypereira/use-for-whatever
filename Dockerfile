@@ -32,7 +32,7 @@ COPY --from=development-dependencies-env /app /app
 RUN pnpm build
 
 # Production stage using node to serve the application
-FROM node:18-alpine AS production
+FROM node:22-alpine AS production
 
 # Install pnpm
 RUN npm install -g pnpm@latest
@@ -48,6 +48,9 @@ RUN pnpm install --prod --frozen-lockfile
 
 # Copy build artifacts from build stage
 COPY --from=build-env /app/build /app/build
+
+# Copy public assets
+COPY --from=build-env /app/public /app/public
 
 # Expose port
 EXPOSE 3000

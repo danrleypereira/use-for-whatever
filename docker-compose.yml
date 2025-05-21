@@ -15,6 +15,10 @@ services:
       - NODE_ENV=production
     networks:
       - forge-network
+    # Make sure the container can resolve the custom hostname
+    extra_hosts:
+      - "forge-ui.kbra.vm:127.0.0.1"
+    hostname: forge-ui-app
 
   # Development service with hot reloading
   dev:
@@ -67,19 +71,20 @@ services:
       - "forge-ui.kbra.vm:127.0.0.1"
     # Use Docker's internal DNS for service discovery instead of extra_hosts
 
-  # Nginx production service
-  nginx-prod:
-    build:
-      context: .
-      dockerfile: Dockerfile.nginx
-    container_name: forge-ui-nginx-prod
+# Nginx proxy for Node.js production service
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: forge-ui-nginx-proxy
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "80:80"
+    volumes:
+      - ./nginx/proxy.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - app
     networks:
       - forge-network
-    environment:
-      - NODE_ENV=production
     extra_hosts:
       - "forge-ui.kbra.vm:127.0.0.1"
 

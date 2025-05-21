@@ -65,11 +65,12 @@ fi
 echo
 echo -e "${YELLOW}=== Running Options ===${NC}"
 echo "1) Start development environment with docker-compose"
-echo "2) Start production environment with Nginx"
-echo "3) Exit without starting anything"
+echo "2) Start production environment with Node.js (port 3000)"
+echo "3) Start production environment with Nginx proxy to Node.js (port 80) [RECOMMENDED]"
+echo "4) Exit without starting anything"
 echo
 
-read -p "Choose an option (1-3): " choice
+read -p "Choose an option (1-4): " choice
 
 case $choice in
     1)
@@ -95,34 +96,72 @@ case $choice in
         fi
         ;;
     2)
-        echo -e "${YELLOW}Building and starting production environment...${NC}"
-        if docker build -f Dockerfile.nginx -t forge-ui:nginx .; then
-            echo "Docker image built successfully."
+        echo -e "${YELLOW}Starting production environment with Node.js...${NC}"
+        echo "Building the Node.js production container..."
+        
+        # Cleanup old containers if any exist
+        docker-compose down || true
+        
+        # Force rebuild to ensure clean build
+        if docker-compose build --no-cache app; then
+            echo "Container built successfully."
             
-            # Remove existing container if it exists
-            docker rm -f forge-ui-prod 2>/dev/null
-            
-            if docker run -d -p 80:80 --name forge-ui-prod forge-ui:nginx; then
+            # Now start the container
+            if docker-compose up -d app; then
                 # Simple pause to let container initialize
                 sleep 2
                 
-                # Just check if container exists, the run command returning success
-                # is generally sufficient to indicate it started
-                echo -e "${GREEN}✓ Production environment started!${NC}"
-                echo "You can access the application at http://forge-ui.kbra.vm"
-                echo "View logs with: docker logs -f forge-ui-prod"
+                # Check if the container is running
+                if docker-compose ps | grep -q "app"; then
+                    echo -e "${GREEN}✓ Production environment started!${NC}"
+                    echo "You can access the application at http://forge-ui.kbra.vm:3000"
+                    echo "View logs with: docker-compose logs -f app"
+                else
+                    echo -e "${RED}× Failed to start the production container.${NC}"
+                    echo "Please check docker-compose logs for errors: docker-compose logs"
+                    exit 1
+                fi
             else
-                echo -e "${RED}× Failed to start Docker container.${NC}"
-                echo "Check if port 80 is already in use or if you have permission issues."
+                echo -e "${RED}× Failed to start Docker Compose services.${NC}"
+                echo "Please check for errors in your configuration files."
                 exit 1
             fi
         else
             echo -e "${RED}× Docker build failed.${NC}"
-            echo "Check the Dockerfile.nginx and build logs for errors."
+            echo "Check the Dockerfile and build logs for errors."
             exit 1
         fi
         ;;
     3)
+        echo -e "${YELLOW}Starting production environment with Nginx proxy to Node.js...${NC}"
+        echo "This option provides the best of both worlds: Node.js SSR with Nginx serving static assets"
+        
+        # Cleanup old containers if any exist
+        docker-compose down || true
+        
+        # Start the app and nginx-proxy services
+        if docker-compose up -d app nginx-proxy; then
+            # Simple pause to let containers initialize
+            sleep 3
+            
+            # Check if containers are running
+            if docker-compose ps | grep -q "app" && docker-compose ps | grep -q "nginx-proxy"; then
+                echo -e "${GREEN}✓ Production environment with Nginx proxy started!${NC}"
+                echo "You can access the application at http://forge-ui.kbra.vm"
+                echo "View app logs with: docker-compose logs -f app"
+                echo "View Nginx logs with: docker-compose logs -f nginx-proxy"
+            else
+                echo -e "${RED}× Failed to start the production containers.${NC}"
+                echo "Please check docker-compose logs for errors: docker-compose logs"
+                exit 1
+            fi
+        else
+            echo -e "${RED}× Failed to start Docker Compose services.${NC}"
+            echo "Please check for errors in your configuration files."
+            exit 1
+        fi
+        ;;
+    4)
         echo "Exiting without starting any services."
         ;;
     *)

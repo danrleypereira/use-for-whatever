@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({ active }) => {
       <Link to="/" className="kds-header-brand-link text-decoration-none">
         <div className="kds-header-brand">
           <img
-            src="/img/KBRA-icon.png"
+            src="/assets/img/KBRA-icon.png"
             alt="KBRA"
             style={{ height: 48, width: 48 }}
           />

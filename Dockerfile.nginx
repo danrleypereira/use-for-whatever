@@ -30,11 +30,15 @@ RUN mkdir -p /var/log/nginx
 # Copy built static files from build stage
 COPY --from=build /app/build/client /usr/share/nginx/html
 
+# Copy public assets
+COPY --from=build /app/public /usr/share/nginx/html
+
+# Copy entrypoint script
+COPY nginx-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/nginx-entrypoint.sh
+
 # Expose port 80
 EXPOSE 80
 
-# Add hosts entry for the custom domain
-RUN echo "127.0.0.1 forge-ui.kbra.vm" >> /etc/hosts
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start with our entrypoint script
+CMD ["/usr/local/bin/nginx-entrypoint.sh"]

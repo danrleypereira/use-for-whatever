@@ -40,7 +40,10 @@ The script will:
 
 1. Add an entry to your hosts file (requires sudo)
 2. Set up required directories
-3. Start the application in your chosen mode (development or production)
+3. Start the application in your chosen mode:
+   - Development with HMR on port 80
+   - Production with Node.js on port 3000
+   - Production with Nginx proxy to Node.js on port 80 (recommended)
 
 ## Development Workflow
 
@@ -76,12 +79,22 @@ docker compose logs -f dev
 # Build for production
 pnpm build
 
-# Using Docker with Node.js server
+# Using Docker with Node.js server (port 3000)
 docker compose up -d app
 
-# Using Docker with Nginx (recommended)
-docker compose up -d nginx-prod
+# Using Docker with Nginx proxy to Node.js (RECOMMENDED, port 80)
+docker compose up -d app nginx-proxy
+
+# Or use the setup script for easier deployment
+./setup-custom-domain.sh
+# Then select option 3 for the recommended production mode
 ```
+
+The recommended production setup uses an Nginx reverse proxy in front of the Node.js server, giving you the best of both worlds:
+
+- Server-side rendering (SSR) from the Node.js server
+- Efficient static asset delivery and caching from Nginx
+- Security headers and other optimizations from Nginx
 
 ## Troubleshooting
 
@@ -122,6 +135,9 @@ forge-ui/
 │   ├── routes/           # Route definitions
 │   └── styles/           # CSS files
 ├── nginx/                # Nginx configuration
+│   ├── forge-ui.conf     # Config for development
+│   ├── proxy.conf        # Config for production proxy
+│   └── logs/             # Nginx logs
 ├── public/               # Static assets
 ├── .husky/               # Git hooks
 ├── Dockerfile            # Docker configuration

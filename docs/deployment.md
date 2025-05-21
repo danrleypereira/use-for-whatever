@@ -37,30 +37,20 @@ docker compose up -d app
 
 This will build and start the application using the Node.js server on port 3000.
 
-#### Using Nginx (Recommended)
+#### Using Nginx Reverse Proxy (Recommended)
 
 ```bash
-# Start the Nginx-based production server
-docker compose up -d nginx-prod
+# Start the Node.js server with Nginx reverse proxy
+docker compose up -d app nginx-proxy
 ```
 
 This approach:
 
-- Uses multi-stage builds for smaller images
-- Serves static files through Nginx for better performance
-- Includes proper caching and compression settings
-
-#### Standalone Container
-
-You can also build and run a standalone container:
-
-```bash
-# Build the image
-docker build -f Dockerfile.nginx -t forge-ui:nginx .
-
-# Run the container
-docker run -p 80:80 forge-ui:nginx
-```
+- Uses Nginx as a reverse proxy to the Node.js server
+- Provides the best of both worlds - SSR from Node.js with static asset serving from Nginx
+- Includes proper caching, compression, and security headers
+- Handles WebSocket connections for real-time features
+- Serves the application on port 80 for easier access
 
 ### 3. Custom Hostname Deployment
 
@@ -71,7 +61,7 @@ To deploy with the custom hostname `forge-ui.kbra.vm`:
 ./setup-custom-domain.sh
 ```
 
-Then select option 2 for the production environment.
+Then select option 3 for the recommended production environment with Nginx proxy.
 
 ## Environment Variables
 
