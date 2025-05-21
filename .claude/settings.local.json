@@ -4,7 +4,10 @@
       "Bash(mkdir:*)",
       "Bash(find:*)",
       "Bash(pnpm lint:*)",
-      "Bash(pnpm format:check:*)"
+      "Bash(pnpm format:check:*)",
+      "Bash(chmod:*)",
+      "Bash(ls:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }

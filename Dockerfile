@@ -1,5 +1,5 @@
 # Multi-stage build for React Router application using pnpm
-FROM node:18-alpine AS development-dependencies-env
+FROM node:22-alpine AS development-dependencies-env
 
 # Install pnpm
 RUN npm install -g pnpm@latest
@@ -17,7 +17,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Build stage
-FROM node:18-alpine AS build-env
+FROM node:22-alpine AS build-env
 
 # Install pnpm
 RUN npm install -g pnpm@latest
